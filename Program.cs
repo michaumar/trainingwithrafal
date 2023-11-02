@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace Lesson
 {
@@ -13,45 +14,54 @@ namespace Lesson
     {
         static void Main(string[] args)
         {
-            double a, b;
-            string operation;
-
+            double a = 0.0, b = 0.0;
             Console.WriteLine("kalkulator Chopie");
 
             Console.WriteLine("Type figure a");
-            a = Convert.ToDouble(Console.ReadLine());
+            var temp = IsNumber(a);
+            a = temp;
 
             Console.WriteLine("Type figure b");
-            b = Convert.ToDouble(Console.ReadLine());
+            var temp2 = IsNumber(b);
+            b = temp2;
+
 
             Console.WriteLine("Choose operation +, -, *, /");
-            operation = Console.ReadLine();
+            var operation = Console.ReadLine();
 
-            switch (operation)
+            double result;
+            try
             {
-                case "+":
-                    Console.WriteLine("adding selected {0} + {1} = {2}", a, b, Add(a, b));
-                    break;
-                case "-":
-                    Console.WriteLine("subtraction selected {0} - {1} = {2}", a, b, Subtract(a, b));
-                    break;
-                case "*":
-                    Console.WriteLine("multiplication selected {0} * {1} = {2}", a, b, Multiply(a, b));
-                    break;
-                case "/":
-                    try
-                    {
-                        Console.WriteLine("dividing selected {0} / {1} = {2}", a, b, Divide(a, b));
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("CIULU!!!!" + e.Message);
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Wracej na gruba!!!");
-                    break;
+                switch (operation)
+                {
+                    case "+":
+                        result = Add(a, b);
+                        Console.WriteLine($"adding selected {a} + {b} = {result}");
+                        break;
+                    case "-":
+                        result = Subtract(a, b);
+                        Console.WriteLine($"subtraction selected {a} - {b} = {result}");
+                        break;
+                    case "*":
+                        result = Multiply(a, b);
+                        Console.WriteLine($"multiplication selected {a} * {b} = {result}");
+                        break;
+                    case "/":
+                        result = Divide(a, b);
+                        Console.WriteLine($"dividing selected {a} / {b} = {result}");
+                        break;
+                    default:
+                        Console.WriteLine("Wracej na gruba!!!");
+                        break;
+                }
+
             }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+
         }
         static double Add(double a, double b)
         {
@@ -70,26 +80,27 @@ namespace Lesson
 
         static double Divide(double a, double b)
         {
-
-            //if (b == 0)
-            //{
-            //    Console.WriteLine("Ciuluuu! /0");
-            //    return 0;
-            //}
             if (b == 0)
             {
-                throw new Exception("/0!");
+                throw new DivideByZeroException("ciulu /0!");
             }
             return a / b;
-            //try
-            //{
-            //    return a / b;
-            //}
-            //catch (DivideByZeroException)
-            //{
-            //    Console.WriteLine("Ciuluuu! /0");
-            //    return 0;
-            //}
+        }
+
+        static double IsNumber(double a)
+        {
+            try
+            {
+                a = Convert.ToDouble(Console.ReadLine());
+                return a;
+            }
+            catch
+            {
+                Console.WriteLine("Co żeś tu wpisoł Ciuluu? Zamykam.");
+                Environment.Exit(1);
+            }
+
+            return 0;
         }
     }
 }
