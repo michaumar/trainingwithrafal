@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Data;
 
 namespace Lesson
 {
@@ -16,47 +17,98 @@ namespace Lesson
         {
             double a = 0.0, b = 0.0, result;
             string operation = "";
+
+
             Console.WriteLine("kalkulator Chopie");
 
-            Console.WriteLine("Type figure a");
-            a = InputControl.IsNumber(a);
+            while (true)
+            {   
+                typeFigures:
 
-            Console.WriteLine("Type figure b");
-            b = InputControl.IsNumber(b);
+                a:
+                Console.WriteLine("Type figure a");
+                a = InputControl.IsNumber(a);
 
-            Console.WriteLine("Choose operation +, -, *, /");
-            operation = InputControl.IsCorrectOp(operation);
-
-            try
-            {
-                switch (operation)
+                Console.WriteLine("1. Accept \n " +
+                                  "2. Reject f.e. 1 <enter>");
+                var acceptDeclineA = Console.ReadLine();
+                if (acceptDeclineA == "1")
                 {
-                    case "+":
-                        result = Calculator.Add(a, b);
-                        Console.WriteLine($"adding selected {a} + {b} = {result}");
-                        break;
-                    case "-":
-                        result = Calculator.Subtract(a, b);
-                        Console.WriteLine($"subtraction selected {a} - {b} = {result}");
-                        break;
-                    case "*":
-                        result = Calculator.Multiply(a, b);
-                        Console.WriteLine($"multiplication selected {a} * {b} = {result}");
-                        break;
-                    case "/":
-                        result = Calculator.Divide(a, b);
-                        Console.WriteLine($"dividing selected {a} / {b} = {result}");
-                        break;
-                    default:
-                        Console.WriteLine("Wracej na gruba!!! Złe działanie");
-                        break;
+                    goto b;
+                }
+                else if (acceptDeclineA == "2") 
+                {
+                    goto a;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong acceptation, try one more time");
+                    goto a;
                 }
 
+                b:
+                Console.WriteLine("Type figure b");
+                b = InputControl.IsNumber(b);
+
+                Console.WriteLine("1. Accept \n " +
+                  "2. Reject f.e. 1 <enter>");
+                var acceptDeclineB = Console.ReadLine();
+                if (acceptDeclineB == "1")
+                {
+                    goto chooseOperation;
+                }
+                else if (acceptDeclineB == "2")
+                {
+                    goto b;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong acceptation, try one more time");
+                    goto b;
+                }
+
+
+
+            chooseOperation:
+                Console.WriteLine("Choose operation +, -, *, /");
+                operation = InputControl.IsCorrectOp(operation);
+
+                try
+                {
+                    switch (operation)
+                    {
+                        case "+":
+                            result = Calculator.Add(a, b);
+                            Console.WriteLine($"adding selected {a} + {b} = {result}");
+                            break;
+                        case "-":
+                            result = Calculator.Subtract(a, b);
+                            Console.WriteLine($"subtraction selected {a} - {b} = {result}");
+                            break;
+                        case "*":
+                            result = Calculator.Multiply(a, b);
+                            Console.WriteLine($"multiplication selected {a} * {b} = {result}");
+                            break;
+                        case "/":
+                            result = Calculator.Divide(a, b);
+                            Console.WriteLine($"dividing selected {a} / {b} = {result}");
+                            break;
+                        default:
+                            Console.WriteLine("Wracej na gruba!!! Złe działanie");
+                            break;
+                    }
+
+                }
+                catch (DivideByZeroException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch
+                {
+                    Console.WriteLine("Something went wrong");
+                }
             }
-            catch (DivideByZeroException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+
         }
 
 
@@ -64,6 +116,7 @@ namespace Lesson
 
     class Calculator
     {
+        
         public static double Add(double a, double b)
         {
             return a + b;
@@ -125,6 +178,8 @@ namespace Lesson
             return a;
         }
     }
+
+
 
 
 }
