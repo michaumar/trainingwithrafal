@@ -8,6 +8,7 @@ using System;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Data;
+using System.ComponentModel.Design;
 
 namespace Lesson
 {
@@ -15,59 +16,93 @@ namespace Lesson
     {
         static void Main(string[] args)
         {
-            double a = 0.0, b = 0.0, result;
+            double a = 0.0, b = 0.0, result = 0.0;
             string operation = "";
-
 
             Console.WriteLine("kalkulator Chopie");
 
             while (true)
-            {   
-                typeFigures:
-
-                a:
-                Console.WriteLine("Type figure a");
-                a = InputControl.IsNumber(a);
-
-                Console.WriteLine("1. Accept \n " +
-                                  "2. Reject f.e. 1 <enter>");
-                var acceptDeclineA = Console.ReadLine();
-                if (acceptDeclineA == "1")
+            {
+                Console.WriteLine($"Actual calculation:{a} {operation} {b} = {result}");
+            menu:
+                Console.WriteLine("\nAvailable options:\n" +
+                  "1. Type figures\n" +
+                  "2. Choose operation\n" +
+                  "3. Clear operation\n" +
+                  "4. Delete last action\n" +
+                  "5. Do calculation\n");
+                var choose = Convert.ToInt32(Console.ReadLine());
+                if (choose == 1)
                 {
-                    goto b;
+                    goto typeFigures;
                 }
-                else if (acceptDeclineA == "2") 
-                {
-                    goto a;
-                }
-                else
-                {
-                    Console.WriteLine("Wrong acceptation, try one more time");
-                    goto a;
-                }
-
-                b:
-                Console.WriteLine("Type figure b");
-                b = InputControl.IsNumber(b);
-
-                Console.WriteLine("1. Accept \n " +
-                  "2. Reject f.e. 1 <enter>");
-                var acceptDeclineB = Console.ReadLine();
-                if (acceptDeclineB == "1")
+                else if (choose == 2)
                 {
                     goto chooseOperation;
                 }
-                else if (acceptDeclineB == "2")
+                else if (choose == 3)
                 {
-                    goto b;
+                    Console.Clear();
+                }
+                else if (choose == 4)
+                {
+                    //goto delLastAction;
+                }
+                else if (choose == 5)
+                {
+                    //goto doCalc;
+                }
+                else
+                {
+                    Console.WriteLine("Choose one more time\n");
+                    goto menu;
+                }
+
+            typeFigures:
+
+            typeA:
+                Console.WriteLine("Type figure a");
+                a = InputControl.IsNumber(a);
+
+                Console.WriteLine("1. Accept \n" +
+                                  "2. Undo\n" +
+                                  "f.e. 1 <enter>");
+                var acceptDeclineA = Console.ReadLine();
+                if (acceptDeclineA == "1")
+                {
+                    goto typeB;
+                }
+                else if (acceptDeclineA == "2")
+                {
+                    goto typeA;
                 }
                 else
                 {
                     Console.WriteLine("Wrong acceptation, try one more time");
-                    goto b;
+                    goto typeA;
                 }
 
+            typeB:
+                Console.WriteLine("Type figure b");
+                b = InputControl.IsNumber(b);
 
+                Console.WriteLine("1. Accept\n" +
+                                  "2. Undo\n" +
+                                  "f.e. 1 <enter>");
+                var acceptDeclineB = Console.ReadLine();
+                if (acceptDeclineB == "1")
+                {
+                    goto menu;
+                }
+                else if (acceptDeclineB == "2")
+                {
+                    goto typeB;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong acceptation, try one more time");
+                    goto typeB;
+                }
 
             chooseOperation:
                 Console.WriteLine("Choose operation +, -, *, /");
@@ -107,6 +142,9 @@ namespace Lesson
                 {
                     Console.WriteLine("Something went wrong");
                 }
+
+            
+
             }
 
         }
@@ -116,7 +154,7 @@ namespace Lesson
 
     class Calculator
     {
-        
+
         public static double Add(double a, double b)
         {
             return a + b;
