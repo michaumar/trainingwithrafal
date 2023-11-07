@@ -6,92 +6,61 @@ using System.Text;
 using System.Threading.Tasks;
 using System;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using ConsoleApp15;
 
-namespace Lesson
+namespace Lesson;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        double result;
+        Console.WriteLine("kalkulator Chopie");
+
+
+        Console.WriteLine("Type figure a");
+        var a = InputControl.GetNumericValueFromConsole();
+
+        Console.WriteLine("Type figure b");
+        var b = InputControl.GetNumericValueFromConsole();
+
+        Console.WriteLine("Choose operation +, -, *, /");
+        var operation = InputControl.GetOperationFromConsole();
+
+        try
         {
-            double a, b;
-            string operation;
-
-            Console.WriteLine("kalkulator Chopie");
-
-            Console.WriteLine("Type figure a");
-            a = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine("Type figure b");
-            b = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine("Choose operation +, -, *, /");
-            operation = Console.ReadLine();
-
             switch (operation)
             {
                 case "+":
-                    Console.WriteLine("adding selected {0} + {1} = {2}", a, b, Add(a, b));
+                    result = Calculator.Add(a, b);
+                    Console.WriteLine($"adding selected {a} + {b} = {result}");
                     break;
                 case "-":
-                    Console.WriteLine("subtraction selected {0} - {1} = {2}", a, b, Subtract(a, b));
+                    result = Calculator.Subtract(a, b);
+                    Console.WriteLine($"subtraction selected {a} - {b} = {result}");
                     break;
                 case "*":
-                    Console.WriteLine("multiplication selected {0} * {1} = {2}", a, b, Multiply(a, b));
+                    result = Calculator.Multiply(a, b);
+                    Console.WriteLine($"multiplication selected {a} * {b} = {result}");
                     break;
                 case "/":
-                    try
-                    {
-                        Console.WriteLine("dividing selected {0} / {1} = {2}", a, b, Divide(a, b));
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("CIULU!!!!" + e.Message);
-                    }
+                    result = Calculator.Divide(a, b);
+                    Console.WriteLine($"dividing selected {a} / {b} = {result}");
                     break;
                 default:
-                    Console.WriteLine("Wracej na gruba!!!");
+                    Console.WriteLine("Wracej na gruba!!! Złe działanie");
                     break;
             }
-        }
-        static double Add(double a, double b)
-        {
-            return a + b;
-        }
 
-        static double Subtract(double a, double b)
-        {
-            return (a - b);
         }
-
-        static double Multiply(double a, double b)
+        catch (DivideByZeroException e)
         {
-            return a * b;
-        }
-
-        static double Divide(double a, double b)
-        {
-
-            //if (b == 0)
-            //{
-            //    Console.WriteLine("Ciuluuu! /0");
-            //    return 0;
-            //}
-            if (b == 0)
-            {
-                throw new Exception("/0!");
-            }
-            return a / b;
-            //try
-            //{
-            //    return a / b;
-            //}
-            //catch (DivideByZeroException)
-            //{
-            //    Console.WriteLine("Ciuluuu! /0");
-            //    return 0;
-            //}
+            Console.WriteLine(e.Message);
         }
     }
+
+
 }
 
 
