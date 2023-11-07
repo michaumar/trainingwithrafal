@@ -7,122 +7,56 @@ using System.Threading.Tasks;
 using System;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using ConsoleApp15;
 
-namespace Lesson
+namespace Lesson;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        double result;
+        Console.WriteLine("kalkulator Chopie");
+
+
+        Console.WriteLine("Type figure a");
+        var a = InputControl.GetNumericValueFromConsole();
+
+        Console.WriteLine("Type figure b");
+        var b = InputControl.GetNumericValueFromConsole();
+
+        Console.WriteLine("Choose operation +, -, *, /");
+        var operation = InputControl.GetOperationFromConsole();
+
+        try
         {
-            double a = 0.0, b = 0.0, result;
-            string operation = "";
-            Console.WriteLine("kalkulator Chopie");
-
-            Console.WriteLine("Type figure a");
-            a = InputControl.IsNumber(a);
-
-            Console.WriteLine("Type figure b");
-            b = InputControl.IsNumber(b);
-
-            Console.WriteLine("Choose operation +, -, *, /");
-            operation = InputControl.IsCorrectOp(operation);
-
-            try
+            switch (operation)
             {
-                switch (operation)
-                {
-                    case "+":
-                        result = Calculator.Add(a, b);
-                        Console.WriteLine($"adding selected {a} + {b} = {result}");
-                        break;
-                    case "-":
-                        result = Calculator.Subtract(a, b);
-                        Console.WriteLine($"subtraction selected {a} - {b} = {result}");
-                        break;
-                    case "*":
-                        result = Calculator.Multiply(a, b);
-                        Console.WriteLine($"multiplication selected {a} * {b} = {result}");
-                        break;
-                    case "/":
-                        result = Calculator.Divide(a, b);
-                        Console.WriteLine($"dividing selected {a} / {b} = {result}");
-                        break;
-                    default:
-                        Console.WriteLine("Wracej na gruba!!! Złe działanie");
-                        break;
-                }
-
-            }
-            catch (DivideByZeroException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-
-
-    }
-
-    class Calculator
-    {
-        public static double Add(double a, double b)
-        {
-            return a + b;
-        }
-
-        public static double Subtract(double a, double b)
-        {
-            return (a - b);
-        }
-
-        public static double Multiply(double a, double b)
-        {
-            return a * b;
-        }
-
-        public static double Divide(double a, double b)
-        {
-            if (b == 0)
-            {
-                throw new DivideByZeroException("ciulu /0!");
-            }
-            return a / b;
-        }
-
-    }
-
-    class InputControl
-    {
-        public static double IsNumber(double a)
-        {
-            try
-            {
-                a = Convert.ToDouble(Console.ReadLine());
-                return a;
-            }
-            catch
-            {
-                Console.WriteLine("Co żeś tu wpisoł Ciuluu? Zamykam.");
-                Environment.Exit(1);
-                return 0;
+                case "+":
+                    result = Calculator.Add(a, b);
+                    Console.WriteLine($"adding selected {a} + {b} = {result}");
+                    break;
+                case "-":
+                    result = Calculator.Subtract(a, b);
+                    Console.WriteLine($"subtraction selected {a} - {b} = {result}");
+                    break;
+                case "*":
+                    result = Calculator.Multiply(a, b);
+                    Console.WriteLine($"multiplication selected {a} * {b} = {result}");
+                    break;
+                case "/":
+                    result = Calculator.Divide(a, b);
+                    Console.WriteLine($"dividing selected {a} / {b} = {result}");
+                    break;
+                default:
+                    Console.WriteLine("Wracej na gruba!!! Złe działanie");
+                    break;
             }
 
         }
-
-
-        public static string IsCorrectOp(string a)
+        catch (DivideByZeroException e)
         {
-            //to jest mega na siłę i to tego gówniane, try przecież też sprawdza czy operacja jest na liście
-            a = Console.ReadLine();
-            if (a == "+" || a == "-" || a == "*" || a == "/")
-            {
-                Console.WriteLine("Dobre działanie Mordo");
-            }
-            else
-            {
-                Console.WriteLine("Co żeś tu wpisoł Ciuluu? Zamykam.");
-                Environment.Exit(1);
-            }
-            return a;
+            Console.WriteLine(e.Message);
         }
     }
 
