@@ -27,18 +27,24 @@ public class InputControl
 
     public static string GetOperationFromConsole()
     {
-        //to jest mega na siłę i to tego gówniane, try przecież też sprawdza czy operacja jest na liście
-        var a = Console.ReadLine();
-        if (a == "+" || a == "-" || a == "*" || a == "/")
+        while (true)
         {
-            Console.WriteLine("Dobre działanie Mordo");
+
+            var a = Console.ReadLine();
+            if (a == "+" || a == "-" || a == "*" || a == "/")
+            {
+                Console.WriteLine("Dobre działanie Mordo");
+                return a;
+            }
+            else
+            {
+                Console.WriteLine("Co żeś tu wpisoł Ciuluu? To jest kalkulator\n" +
+              "Podaj jedną z operacji +, -, *, /");
+            }
         }
-        else
-        {
-            Console.WriteLine("Co żeś tu wpisoł Ciuluu? Zamykam.");
-            Environment.Exit(1);
-        }
-        return a;
+
     }
+
 }
+
 
