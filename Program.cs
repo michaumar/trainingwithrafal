@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using ConsoleApp15;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml.XPath;
 
 namespace Lesson;
 
@@ -28,25 +29,43 @@ class Program
         Console.WriteLine("Choose operation +, -, *, /");
         var operation = InputControl.GetOperationFromConsole();
 
+        CurrentOperation CurrentOperationProperties = new CurrentOperation();
+
         try
         {
             switch (operation)
             {
                 case "+":
                     result = Calculator.Add(a, b);
-                    Console.WriteLine($"adding selected {a} + {b} = {result}");
+                    Console.WriteLine($"adding selected {a} {operation} {b} = {result}");
+                    CurrentOperationProperties.A = a;
+                    CurrentOperationProperties.Operation = operation;
+                    CurrentOperationProperties.B = b;
+                    CurrentOperationProperties.Result = result;
                     break;
                 case "-":
                     result = Calculator.Subtract(a, b);
-                    Console.WriteLine($"subtraction selected {a} - {b} = {result}");
+                    Console.WriteLine($"subtraction selected {a} {operation} {b} = {result}");
+                    CurrentOperationProperties.A = a;
+                    CurrentOperationProperties.Operation = operation;
+                    CurrentOperationProperties.B = b;
+                    CurrentOperationProperties.Result = result;
                     break;
                 case "*":
                     result = Calculator.Multiply(a, b);
-                    Console.WriteLine($"multiplication selected {a} * {b} = {result}");
+                    Console.WriteLine($"multiplication selected {a} {operation} {b} = {result}");
+                    CurrentOperationProperties.A = a;
+                    CurrentOperationProperties.Operation = operation;
+                    CurrentOperationProperties.B = b;
+                    CurrentOperationProperties.Result = result;
                     break;
                 case "/":
                     result = Calculator.Divide(a, b);
-                    Console.WriteLine($"dividing selected {a} / {b} = {result}");
+                    Console.WriteLine($"dividing selected {a} {operation} {b} = {result}");
+                    CurrentOperationProperties.A = a;
+                    CurrentOperationProperties.Operation = operation;
+                    CurrentOperationProperties.B = b;
+                    CurrentOperationProperties.Result = result;
                     break;
                 default:
                     Console.WriteLine("Something went wrong :/");
@@ -59,10 +78,11 @@ class Program
             Console.WriteLine(e.Message);
         }
 
-        //DisplayCurrentOperation(a, operation, b, result);
-
-
+        Console.Clear();
+        Console.WriteLine("Current operation:\n");
+        Console.WriteLine($"{CurrentOperationProperties.A} {CurrentOperationProperties.Operation} {CurrentOperationProperties.B} = {CurrentOperationProperties.Result}");
     }
+
     public static int DisplayMenu()
     {
         Console.WriteLine("Available options:\n" +
@@ -81,6 +101,10 @@ class Program
                     Console.WriteLine($"Your choice - {optionValue}");
                     return optionValue;
                 }
+                else
+                {
+                    Console.WriteLine("Wrong! Choose between 1, 2, 3, 4, 5");
+                }
             }
             catch
             {
@@ -90,11 +114,49 @@ class Program
 
     }
 
-    public static void DisplayCurrentOperation(double a, string operation, double b, double result)
+    class CurrentOperation
     {
-        Console.WriteLine($"{a}{operation}{b}={result}");
+        private string operation;
+        public string Operation
+        {
+            get { return operation; }
+            set { operation = value; }
+        }
+
+        private double a;
+        public double A
+        {
+            get { return a; }
+            set { a = value; }
+        }
+
+        private double b;
+        public double B
+        {
+            get { return b; }
+            set { b = value; }
+        }
+
+        private double result;
+        public double Result
+        {
+            get { return result; }
+            set { result = value; }
+        }
+
     }
 
+    public static void DisplayCurrentOperationFunction(double a, string operation, double b, double result)
+    {
+        CurrentOperation CurrentOperationProperties = new CurrentOperation();
+
+        CurrentOperationProperties.A = a;
+        CurrentOperationProperties.Operation = operation;
+        CurrentOperationProperties.B = b;
+        CurrentOperationProperties.Result = result;
+
+        Console.WriteLine($"{CurrentOperationProperties.A}{CurrentOperationProperties.Operation}{CurrentOperationProperties.B}={CurrentOperationProperties.Result}");
+    }
 
 
 
