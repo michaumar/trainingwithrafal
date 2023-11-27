@@ -15,18 +15,18 @@ namespace ConsoleApp15
             set { operation = value; }
         }
 
-        private double a;
-        public double A
+        private double variableA;
+        public double VariableA
         {
-            get { return a; }
-            set { a = value; }
+            get { return variableA; }
+            set { variableA = value; }
         }
 
-        private double b;
-        public double B
+        private double variableB;
+        public double VariableB
         {
-            get { return b; }
-            set { b = value; }
+            get { return variableB; }
+            set { variableB = value; }
         }
 
         private double result;
@@ -36,10 +36,10 @@ namespace ConsoleApp15
             set { result = value; }
         }
 
-        public CurrentOperation(double a, string operation, double b)
+        public CurrentOperation(double variableA, string operation, double variableB)
         {
-            A = a;
-            B = b;
+            VariableA = variableA;
+            VariableA = variableB;
             Operation = operation;
         }
 

@@ -18,44 +18,50 @@ class Program
     static void Main(string[] args)
     {
         double result = 0.0;
+
+        InputControl getValueFromConsole = new InputControl();
+        Menu menu = new Menu();
+
         Console.WriteLine("kalkulator Chopie");
-        //DisplayMenu();
+        menu.DisplayMenu();
+
         Console.WriteLine("Type figure a");
-        var a = InputControl.GetNumericValueFromConsole();
+        var variableA = getValueFromConsole.GetNumericValueFromConsole();
 
         Console.WriteLine("Type figure b");
-        var b = InputControl.GetNumericValueFromConsole();
+        var variableB = getValueFromConsole.GetNumericValueFromConsole();
 
         Console.WriteLine("Choose operation +, -, *, /");
-        var operation = InputControl.GetOperationFromConsole();
+        var operation = getValueFromConsole.GetOperationFromConsole();
 
-        CurrentOperation CurrentOperationProperties = new CurrentOperation(a,operation,b);
+        CurrentOperation currentOperationProperties = new CurrentOperation(variableA, operation, variableB);
+        Calculator calculatorOperation = new Calculator();
 
         try
         {
             switch (operation)
             {
                 case "+":
-                    result = Calculator.Add(a, b);
-                    Console.WriteLine($"adding selected {a} {operation} {b} = {result}");
+                    result = calculatorOperation.Add(variableA, variableB);
+                    Console.WriteLine($"adding selected {variableA} {operation} {variableB} = {result}");
                     break;
                 case "-":
-                    result = Calculator.Subtract(a, b);
-                    Console.WriteLine($"subtraction selected {a} {operation} {b} = {result}");
+                    result = calculatorOperation.Subtract(variableA, variableB);
+                    Console.WriteLine($"subtraction selected {variableA} {operation} {variableB} = {result}");
                     break;
                 case "*":
-                    result = Calculator.Multiply(a, b);
-                    Console.WriteLine($"multiplication selected {a} {operation} {b} = {result}");
+                    result = calculatorOperation.Multiply(variableA, variableB);
+                    Console.WriteLine($"multiplication selected {variableA} {operation} {variableB} = {result}");
                     break;
                 case "/":
-                    result = Calculator.Divide(a, b);
-                    Console.WriteLine($"dividing selected {a} {operation} {b} = {result}");
+                    result = calculatorOperation.Divide(variableA, variableB);
+                    Console.WriteLine($"dividing selected {variableA} {operation} {variableB} = {result}");
                     break;
                 default:
                     Console.WriteLine("Something went wrong :/");
                     break;
             }
-            CurrentOperationProperties.Result = result;
+            currentOperationProperties.Result = result;
 
         }
         catch (DivideByZeroException e)
@@ -63,56 +69,9 @@ class Program
             Console.WriteLine(e.Message);
         }
 
-        Console.Clear();
         Console.WriteLine("Current operation:\n");
-        Console.WriteLine($"{CurrentOperationProperties.A} {CurrentOperationProperties.Operation} {CurrentOperationProperties.B} = {CurrentOperationProperties.Result}");
+        Console.WriteLine($"{currentOperationProperties.VariableA} {currentOperationProperties.Operation} {currentOperationProperties.VariableB} = {currentOperationProperties.Result}");
     }
-
-    public static int DisplayMenu()
-    {
-        Console.WriteLine("Available options:\n" +
-                          "1. Type figures\n" +
-                          "2. Choose operation\n" +
-                          "3. Clean operation\n" +
-                          "4. Delete last action\n" +
-                          "5. Do operation");
-        while (true)
-        {
-            try
-            {
-                var optionValue = int.Parse(Console.ReadLine());
-                if (optionValue >= 1 && optionValue <= 5)
-                {
-                    Console.WriteLine($"Your choice - {optionValue}");
-                    return optionValue;
-                }
-                else
-                {
-                    Console.WriteLine("Wrong! Choose between 1, 2, 3, 4, 5");
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Wrong! Choose between 1, 2, 3, 4, 5");
-            }
-        }
-
-    }
-
-    public static void DisplayCurrentOperationFunction(double a, string operation, double b, double result)
-    {
-        CurrentOperation CurrentOperationProperties = new CurrentOperation();
-
-        CurrentOperationProperties.A = a;
-        CurrentOperationProperties.Operation = operation;
-        CurrentOperationProperties.B = b;
-        CurrentOperationProperties.Result = result;
-
-        Console.WriteLine($"{CurrentOperationProperties.A}{CurrentOperationProperties.Operation}{CurrentOperationProperties.B}={CurrentOperationProperties.Result}");
-    }
-
-
-
 
 
 
