@@ -17,7 +17,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        double result;
+        double result = 0.0;
         Console.WriteLine("kalkulator Chopie");
         //DisplayMenu();
         Console.WriteLine("Type figure a");
@@ -29,7 +29,7 @@ class Program
         Console.WriteLine("Choose operation +, -, *, /");
         var operation = InputControl.GetOperationFromConsole();
 
-        CurrentOperation CurrentOperationProperties = new CurrentOperation();
+        CurrentOperation CurrentOperationProperties = new CurrentOperation(a,operation,b);
 
         try
         {
@@ -38,39 +38,24 @@ class Program
                 case "+":
                     result = Calculator.Add(a, b);
                     Console.WriteLine($"adding selected {a} {operation} {b} = {result}");
-                    CurrentOperationProperties.A = a;
-                    CurrentOperationProperties.Operation = operation;
-                    CurrentOperationProperties.B = b;
-                    CurrentOperationProperties.Result = result;
                     break;
                 case "-":
                     result = Calculator.Subtract(a, b);
                     Console.WriteLine($"subtraction selected {a} {operation} {b} = {result}");
-                    CurrentOperationProperties.A = a;
-                    CurrentOperationProperties.Operation = operation;
-                    CurrentOperationProperties.B = b;
-                    CurrentOperationProperties.Result = result;
                     break;
                 case "*":
                     result = Calculator.Multiply(a, b);
                     Console.WriteLine($"multiplication selected {a} {operation} {b} = {result}");
-                    CurrentOperationProperties.A = a;
-                    CurrentOperationProperties.Operation = operation;
-                    CurrentOperationProperties.B = b;
-                    CurrentOperationProperties.Result = result;
                     break;
                 case "/":
                     result = Calculator.Divide(a, b);
                     Console.WriteLine($"dividing selected {a} {operation} {b} = {result}");
-                    CurrentOperationProperties.A = a;
-                    CurrentOperationProperties.Operation = operation;
-                    CurrentOperationProperties.B = b;
-                    CurrentOperationProperties.Result = result;
                     break;
                 default:
                     Console.WriteLine("Something went wrong :/");
                     break;
             }
+            CurrentOperationProperties.Result = result;
 
         }
         catch (DivideByZeroException e)
@@ -110,38 +95,6 @@ class Program
             {
                 Console.WriteLine("Wrong! Choose between 1, 2, 3, 4, 5");
             }
-        }
-
-    }
-
-    class CurrentOperation
-    {
-        private string operation;
-        public string Operation
-        {
-            get { return operation; }
-            set { operation = value; }
-        }
-
-        private double a;
-        public double A
-        {
-            get { return a; }
-            set { a = value; }
-        }
-
-        private double b;
-        public double B
-        {
-            get { return b; }
-            set { b = value; }
-        }
-
-        private double result;
-        public double Result
-        {
-            get { return result; }
-            set { result = value; }
         }
 
     }
