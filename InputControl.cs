@@ -8,7 +8,7 @@ namespace ConsoleApp15;
 
 public class InputControl
 {
-    public static double GetNumericValueFromConsole()
+    public double GetNumericValueFromConsole()
     {
         while (true)
         {
@@ -25,7 +25,7 @@ public class InputControl
     }
 
 
-    public static string GetOperationFromConsole()
+    public string GetOperationFromConsole()
     {
         while (true)
         {
