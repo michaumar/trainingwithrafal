@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp15
 {
-    internal class Menu
+    public class Menu
     {
         public int DisplayMenu()
         {
@@ -22,14 +22,9 @@ namespace ConsoleApp15
                 {
                     var optionValue = int.Parse(Console.ReadLine());
                     if (optionValue >= 1 && optionValue <= 5)
-                    {
-                        Console.WriteLine($"Your choice - {optionValue}");
                         return optionValue;
-                    }
                     else
-                    {
-                        Console.WriteLine("Wrong! Choose between 1, 2, 3, 4, 5");
-                    }
+                        throw new ArgumentOutOfRangeException();
                 }
                 catch
                 {
